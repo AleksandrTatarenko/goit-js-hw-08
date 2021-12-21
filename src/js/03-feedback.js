@@ -15,7 +15,6 @@ function onFormInput(e) {
     console.log(e.target.name);
     console.log(e.target.value);
     formData[e.target.name] = e.target.value;
-    console.log[formData];
     localStorage.setItem("feedback-form-state", JSON.stringify(formData));
 };
 
