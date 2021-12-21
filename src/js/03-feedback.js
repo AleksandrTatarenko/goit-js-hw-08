@@ -20,18 +20,18 @@ function onFormInput(e) {
 };
 
 populateData();
- 
+    
 function populateData() {
     const savedData = localStorage.getItem("feedback-form-state");
     const parsedData = JSON.parse(savedData);
     if (parsedData) {
         ref.input.value = parsedData.email;
         ref.textarea.value = parsedData.message;
-        console.log(parsedData);
     }
 };
 
 function onFormSubmit(e) {
+    console.log(formData);
     e.preventDefault();
     e.currentTarget.reset();
     localStorage.removeItem("feedback-form-state");
