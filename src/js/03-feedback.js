@@ -24,8 +24,8 @@ function populateData() {
     const savedData = localStorage.getItem("feedback-form-state");
     const parsedData = JSON.parse(savedData);
     if (parsedData) {
-        ref.input.value = parsedData.email;
-        ref.textarea.value = parsedData.message;
+        ref.input.value = parsedData.email||'';
+        ref.textarea.value = parsedData.message||'';
     }
 };
 
