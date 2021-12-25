@@ -1,39 +1,38 @@
-import throttle from "lodash/throttle";
+import throttle from 'lodash/throttle';
 
 const ref = {
-    form: document.querySelector('.feedback-form'),
-    input: document.querySelector('.feedback-form input'),
-    textarea: document.querySelector('.feedback-form textarea'),
+  form: document.querySelector('.feedback-form'),
 };
 
-const formData = {};
+const email = ref.form.elements.email;
+const message = ref.form.elements.message;
 
 ref.form.addEventListener('input', throttle(onFormInput, 500));
 ref.form.addEventListener('submit', onFormSubmit);
 
 function onFormInput(e) {
-    console.log(e.target.name);
-    console.log(e.target.value);
-    formData[e.target.name] = e.target.value;
-    localStorage.setItem("feedback-form-state", JSON.stringify(formData));
-};
+  const formData = {
+    email: email.value,
+    message: message.value,
+  };
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+}
 
 populateData();
-    
+
 function populateData() {
-    const savedData = localStorage.getItem("feedback-form-state");
-    const parsedData = JSON.parse(savedData);
-    if (parsedData) {
-        ref.input.value = parsedData.email||'';
-        ref.textarea.value = parsedData.message||'';
-    }
-};
+  const parsedData = JSON.parse(localStorage.getItem('feedback-form-state'));
+  if (!parsedData) return;
+  email.value = parsedData.email;
+  message.value = parsedData.message;
+}
 
 function onFormSubmit(e) {
-    console.log(formData);
-    e.preventDefault();
-    e.currentTarget.reset();
-    localStorage.removeItem("feedback-form-state");
-};
-
-
+  e.preventDefault();
+  if (!email.value || !message.value) {
+    return alert('All feels must be fell out!');
+  }
+  console.log({ email: email.value, message: message.value });
+  e.currentTarget.reset();
+  localStorage.removeItem('feedback-form-state');
+}
